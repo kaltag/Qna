@@ -2,11 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe Question do
-  it { is_expected.to validate_presence_of :title }
+RSpec.describe Answer do
   it { is_expected.to validate_presence_of :body }
 
   describe 'associations' do
-    it { is_expected.to have_many(:answers).class_name('Answer') }
+    it { is_expected.to belong_to(:question).class_name('Question') }
   end
 end
