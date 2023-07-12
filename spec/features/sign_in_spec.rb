@@ -2,12 +2,8 @@
 
 require 'rails_helper'
 
-describe 'User can sign in', "
-  In order to ask questions
-  As an unauthenticated user
-  I'd like to be able to sign in
-" do
-  let(:user) { User.create!(email: 'user@test.com', password: '12345678') }
+describe 'User can sign in' do
+  let(:user) { create(:user) }
 
   before { visit new_user_session_path }
 
