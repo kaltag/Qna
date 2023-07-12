@@ -1,22 +1,13 @@
 # frozen_string_literal: true
 
 class AnswersController < ApplicationController
+  before_action :authenticate_user!
+
   helper_method :question
-
-  def show; end
-
-  def new; end
-
-  def edit; end
 
   def create
     @answer = question.answers.new(answer_params)
-
-    if @answer.save
-      redirect_to question_answer_path(question, @answer)
-    else
-      render :new
-    end
+    redirect_to question_path(question), notice: 'Your answer successfully created.' if @answer.save
   end
 
   private
