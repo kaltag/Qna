@@ -4,13 +4,12 @@ require 'rails_helper'
 
 describe 'User can create answers' do
   let(:user) { create(:user) }
-  let(:question) { create(:question) }
+  let(:question) { create(:question, user: user) }
 
   describe 'Authenticated user' do
     before do
       sign_in(user)
 
-      visit questions_path
       visit question_path(question)
     end
 

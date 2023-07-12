@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe 'User can view the list of questions' do
   let(:user) { create(:user) }
-  let!(:question) { create(:question) }
+  let!(:question) { create(:question, user: user) }
 
   it 'User can view the list of questions' do
     visit questions_path

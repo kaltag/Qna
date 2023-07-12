@@ -19,7 +19,7 @@ class QuestionsController < ApplicationController
   def edit; end
 
   def create
-    @question = Question.new(question_params)
+    @question = current_user.questions.new(question_params)
 
     if @question.save
       redirect_to @question, notice: 'Your question successfully created.'
@@ -37,8 +37,12 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy
-    redirect_to questions_path
+    if @question.user == current_user
+      @question.destroy
+      redirect_to root_path, notice: 'Your question successfully deleted.'
+    else
+      redirect_to @question, notice: 'You can only delete your own question.'
+    end
   end
 
   private
