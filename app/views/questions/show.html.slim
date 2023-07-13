@@ -1,0 +1,9 @@
+h1= @question.title
+p= @question.body
+-if user_signed_in?
+  -if current_user == @question.user
+    = link_to "Delete question", question_path(@question), data: { turbo_method: :delete }
+
+= render partial: 'answers/answers', collection: @question.answers
+
+= render "answers/form"
