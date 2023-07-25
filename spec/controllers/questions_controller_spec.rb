@@ -104,22 +104,21 @@ RSpec.describe QuestionsController do
 
       it 'redirects to updated question' do
         patch :update, params: { id: question, question: attributes_for(:question) }, format: :turbo_stream
-        expect(response).to render_template :update
+        expect(response).to redirect_to question
       end
     end
 
     context 'with invalid attributes' do
-      before { patch :update, params: { id: question, question: attributes_for(:question, :invalid) }, format: :turbo_stream }
-
       it 'does not change question' do
-        question.reload
-
-        expect(question.title).to eq 'MyString'
-        expect(question.body).to eq 'MyText'
+        expect do
+          patch :update, params: { id: question, question: attributes_for(:question, :invalid) }
+        end.not_to change(question, :title)
       end
 
       it 're-renders edit view' do
-        expect(response).to render_template :update
+        patch :update, params: { id: question, question: attributes_for(:question, :invalid) }
+
+        expect(response).to render_template :edit
       end
     end
   end

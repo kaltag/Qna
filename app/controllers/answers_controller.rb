@@ -3,7 +3,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy]
   before_action :load_question, only: %i[create]
-  before_action :load_answer, only: %i[destroy update edit]
+  before_action :load_answer, only: %i[destroy update edit mark]
 
   def edit; end
 
@@ -14,7 +14,11 @@ class AnswersController < ApplicationController
   end
 
   def update
-    @answer.update(answer_params)
+    if @answer.update(answer_params)
+      redirect_to question_path(@answer.question)
+    else
+      render :edit
+    end
   end
 
   def destroy
@@ -23,6 +27,16 @@ class AnswersController < ApplicationController
       redirect_to question_path(@answer.question), notice: 'Your answer successfully deleted.'
     else
       redirect_to answer, notice: 'You can only delete your own answer.'
+    end
+  end
+
+  def mark
+    @question = @answer.question
+    old_answer = @question.answers.find_by(mark: true)
+    if @answer != old_answer
+      old_answer&.update(mark: false)
+      @answer.update(mark: true)
+      redirect_to @question
     end
   end
 

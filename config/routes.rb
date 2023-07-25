@@ -6,7 +6,11 @@ Rails.application.routes.draw do
     get '/users/sign_out' => 'devise/sessions#destroy'
   end
   resources :questions do
-    resources :answers, shallow: true
+    resources :answers, shallow: true do
+      member do
+        post :mark
+      end
+    end
   end
   root to: 'questions#index'
 end

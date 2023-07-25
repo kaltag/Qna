@@ -1,4 +1,5 @@
 = turbo_frame_tag id=dom_id(@question)
   = render 'show_question', question: @question
-  = render partial: 'answers/answer', collection: @question.answers if @question.answers.present?
-  = render "answers/form"
+  div id='answers'
+    = render partial: 'answers/answer', collection: @question.answers.order(mark: :desc, created_at: :asc) if @question.answers.present?
+    = render "answers/form"
