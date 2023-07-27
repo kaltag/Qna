@@ -1,9 +1,5 @@
-h1= @question.title
-p= @question.body
--if user_signed_in?
-  -if current_user == @question.user
-    = link_to "Delete question", question_path(@question), data: { turbo_method: :delete }
-
-= render partial: 'answers/answers', collection: @question.answers
-
-= render "answers/form"
+= turbo_frame_tag id=dom_id(@question)
+  = render 'show_question', question: @question
+  div id='answers'
+    = render partial: 'answers/answer', collection: @question.answers.order(mark: :desc, created_at: :asc) if @question.answers.present?
+    = render "answers/form"

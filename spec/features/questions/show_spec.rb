@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 describe 'User can view question with answers' do
-  let(:user) { create(:user) }
-  let(:question) { create(:question, user: user) }
+  let!(:user) { create(:user) }
+  let!(:question) { create(:question, user: user) }
   let!(:answers) { create_list(:answer, 3, question: question, user: user) }
 
   it 'User tries to watch question with answers' do
