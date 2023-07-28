@@ -10,4 +10,8 @@ RSpec.describe Question do
     it { is_expected.to have_many(:answers).class_name('Answer') }
     it { is_expected.to belong_to(:user).class_name('User') }
   end
+
+  it 'have many attached files' do
+    expect(Question.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
+  end
 end
