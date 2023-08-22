@@ -68,9 +68,8 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.after(:all) do
-    FileUtils.rm_rf("#{Rails.root}/tmp/storage")
+    FileUtils.rm_rf(Rails.root.join('tmp/storage').to_s)
   end
-
 end
 
 Shoulda::Matchers.configure do |config|

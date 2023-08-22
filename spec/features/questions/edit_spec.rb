@@ -18,7 +18,7 @@ describe 'Authenticated user tries to edit his question' do
   it 'edit question without errors' do
     fill_in 'Title', with: 'New question title'
     fill_in 'Body', with: 'New question body'
-    attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+    attach_file 'File', [Rails.root.join('spec/rails_helper.rb').to_s, Rails.root.join('spec/spec_helper.rb').to_s]
     click_button 'Ask'
 
     expect(page).not_to have_content question.body

@@ -22,7 +22,7 @@ describe 'Authenticated user tries to edit his answer' do
     form = find("turbo-frame[id=inline_answer_#{answer.id}]")
     within form do
       fill_in 'Body', with: 'New answer body'
-      attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+      attach_file 'File', [Rails.root.join('spec/rails_helper.rb').to_s, Rails.root.join('spec/spec_helper.rb').to_s]
 
       click_button 'Save'
     end

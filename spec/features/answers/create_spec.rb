@@ -21,10 +21,10 @@ describe 'User can create answers' do
       expect(page).to have_content 'Answer 1'
     end
 
-    scenario 'asks a answer with attached file' do
+    it 'asks a answer with attached file' do
       fill_in 'Body', with: 'text text text'
 
-      attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+      attach_file 'File', [Rails.root.join('spec/rails_helper.rb').to_s, Rails.root.join('spec/spec_helper.rb').to_s]
       click_on 'Create'
 
       expect(page).to have_link 'rails_helper.rb'

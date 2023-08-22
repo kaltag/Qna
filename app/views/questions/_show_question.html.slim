@@ -9,3 +9,9 @@ div id="question_files"
 -if current_user == question.user
   = link_to "Delete question", question_path(question), data: { turbo_method: :delete }
   = link_to 'Edit question', edit_question_path(question)
+
+.links
+  p Links:
+  ul
+    - @question.links.each do |link|
+      li = link_to link.name, link.url
