@@ -9,4 +9,8 @@ FactoryBot.define do
   trait :invalid do
     title { nil }
   end
+
+  trait :with_file do
+    files { [Rack::Test::UploadedFile.new('spec/rails_helper.rb', 'spec/spec_helper.rb')] }
+  end
 end

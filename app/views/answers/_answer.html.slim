@@ -1,8 +1,13 @@
 div id="answer_#{answer.id}"
+  p= "--------------------"
   - if answer.mark
     p Best answer
-
-  p= "--------------------"
+  div id="answer_files_#{answer.id}"
+    - if answer.files.attached?
+      - answer.files.each do |file|
+        p= link_to file.filename.to_s, url_for(file)
+        - if current_user.present? && current_user ==  answer.user
+          =link_to 'delete file ', purge_attachment_path(file), data: { turbo_method: :delete }
   -if current_user.present? && current_user == answer.user
     = turbo_frame_tag id=dom_id(answer)
       = link_to answer.body, edit_answer_path(answer)
