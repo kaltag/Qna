@@ -5,9 +5,12 @@ require 'rails_helper'
 RSpec.describe Answer do
   it { is_expected.to validate_presence_of :body }
 
+  it { is_expected.to accept_nested_attributes_for :links }
+
   describe 'associations' do
     it { is_expected.to belong_to(:question).class_name('Question') }
     it { is_expected.to belong_to(:user).class_name('User') }
+    it { is_expected.to have_many(:links).dependent(:destroy) }
   end
 
   it 'have many attached files' do
