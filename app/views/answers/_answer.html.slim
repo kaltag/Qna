@@ -14,11 +14,11 @@ div id="answer_#{answer.id}"
       p= link_to "Delete answer", answer_path(answer), data: { turbo_method: :delete }
   - else
     p = answer.body
-
-  .links
-    p Links:
-    ul
-      - answer.links.each do |link|
-        li = link_to link.name, link.url
+  - if answer.links.count > 0
+    .links
+      p Links:
+      ul
+        - answer.links.each do |link|
+          li = link_to link.name, link.url
   - if current_user.present? && current_user ==  @question.user
     = button_to 'Mark', mark_answer_path(answer)
