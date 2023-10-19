@@ -1,0 +1,6 @@
+.container.mt-4
+  .h1 My Rewards
+  .row
+    - current_user.rewards.each do |reward|
+      .col-md-4.mb-4
+        = render 'reward', reward: reward

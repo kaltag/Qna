@@ -1,0 +1,5 @@
+div id="links-section-#{linkable.class.to_s.downcase}" class="form-group"
+  = f.fields_for :links do |link|
+    .form-group
+      = render 'links/form', link: link, parent_form: f, type: linkable.class.to_s.downcase
+= f.submit 'Add link', formaction: link_path(linkable.links.size), formmethod: :post, id: "add-link", formnovalidate: true, class: "btn btn-primary mt-3"

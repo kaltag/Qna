@@ -1,0 +1,4 @@
+div id="reward-section" class="form-group"
+  = f.fields_for :reward do |reward|
+    .form-group
+      = render 'rewards/form', f: reward

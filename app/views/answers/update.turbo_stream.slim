@@ -1,0 +1,6 @@
+- if !@answer.errors.present?
+  = turbo_stream.replace "answer_#{@answer.id}" do
+    = render @answer
+- else
+  = turbo_stream.update "inline_#{dom_id(@answer)}" do
+    = render 'answers/form_inline', answer: @answer

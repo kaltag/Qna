@@ -1,0 +1,6 @@
+.card
+  - if reward.file.attached?
+    = image_tag url_for(reward.file), class: 'card-img-top'
+  .card-body
+    .h5.card-title= reward.name
+    p= reward.question.title

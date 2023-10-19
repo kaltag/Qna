@@ -1,0 +1,9 @@
+- if @answer.valid?
+  = turbo_stream.append "answers" do
+    = render @answer
+
+= turbo_stream.update "flash" do
+  = render 'shared/flash'
+
+= turbo_stream.replace "new_answer" do
+  = render 'answers/new', answer: @new_answer

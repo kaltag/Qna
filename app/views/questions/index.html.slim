@@ -1,4 +1,11 @@
-p= link_to 'Ask question', new_question_path
+div class="container mt-4"
+  = link_to 'Ask question', new_question_path, class: "btn btn-primary mb-3"
 
--@questions.each do |question|
-  div=link_to question.title, question_path(question)
+  table.table.table-striped
+    thead
+      tr
+        th Title
+        th Body
+    tbody
+      - @questions.each do |question|
+        = render question
