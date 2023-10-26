@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   has_many :questions, class_name: 'Question', dependent: :destroy, inverse_of: :user
   has_many :answers, class_name: 'Answer', dependent: :destroy, inverse_of: :user
+  has_many :votes, dependent: :destroy
 
   scope :all_rewards, ->(user) { Reward.joins(question: :answers).where(answers: { mark: true, user: user }) }
 

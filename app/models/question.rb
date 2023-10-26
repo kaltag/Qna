@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Question < ApplicationRecord
+  include Votable
+
   has_many :answers, dependent: :destroy
   belongs_to :user, class_name: 'User'
   has_many :links, dependent: :destroy, as: :linkable

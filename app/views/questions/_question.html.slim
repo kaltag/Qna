@@ -1,4 +1,7 @@
 tr
   td
+    div id="question_#{question.id}_votes"
+      = render 'votes/vote', votable: question
+  td
     = link_to question.title, question_path(question), class: "text-decoration-none"
   td = question.body
