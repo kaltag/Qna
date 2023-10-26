@@ -1,11 +1,26 @@
-= turbo_frame_tag id=dom_id(question)
-  = render 'shared/errors', resource: question
+div class="container mt-4 p-4 border rounded bg-light"
+  = form_with model: question, class: 'mb-3' do |f|
+    .form-group
+      = f.label :title, class: 'form-label'
+      = f.text_field :title, class: 'form-control'
+    .form-group
+      = f.label :body, class: 'form-label'
+      = f.text_area :body, class: 'form-control'
+    .form-group
+      = f.label :files, class: 'form-label'
+      = f.file_field :files, multiple: true, class: 'form-control'
+    - if question.files.attached?
+      .form-group
+        p
+          = f.collection_check_boxes :files, question.files, :signed_id, :filename.to_s do |b|
+            .form-check
+              = b.check_box(checked: true, class: 'form-check-input')
+              = b.label class: 'form-check-label'
+    div.border.p-3.mb-3
+      = render 'links/new', f: f, linkable: question
 
-  = form_with model: question do |f|
-    = f.label :title
-    = f.text_field :title
-    = f.label :body
-    = f.text_area :body
-    = f.label :files
-    = f.file_field :files, multiple: true, direct_upload: true
-    = f.submit 'Ask'
+    - if !question.reward.nil?
+      div.border.p-3.mb-3
+        = render 'rewards/new', f: f
+    .form-group
+      = f.submit 'Ask', class: "btn btn-primary mt-3"

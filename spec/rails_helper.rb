@@ -34,8 +34,13 @@ end
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::IntegrationHelpers, type: :request
   config.include ControllerHelpers, type: :controller
+  config.include ControllerHelpers, type: :request
   config.include FeatureHelpers, type: :feature
+
+  Capybara.javascript_driver = :selenium_chrome_headless
+  #
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = Rails.root.join('spec/fixtures').to_s
 
@@ -59,18 +64,16 @@ RSpec.configure do |config|
   #     end
   #
   # The different available types are documented in the features, such as in
-  # https://rspec.info/features/6-0/rspec-rails
+  # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-
   config.after(:all) do
-    FileUtils.rm_rf("#{Rails.root}/tmp/storage")
+    FileUtils.rm_rf(Rails.root.join('tmp/storage').to_s)
   end
-
 end
 
 Shoulda::Matchers.configure do |config|

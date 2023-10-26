@@ -1,0 +1,3 @@
+= turbo_stream.replace "new_question_errors_#{@question.id}" do
+  div id="new_question_#{@question}"
+    = render 'shared/errors', resource: @question

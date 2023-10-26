@@ -1,0 +1,7 @@
+- if @question.errors.present?
+  = turbo_stream.update dom_id(@question) do
+    = render 'questions/form_inline', question: @question
+- else
+  = turbo_stream.replace dom_id(@question)
+    = turbo_frame_tag id=dom_id(@question)
+      = render 'questions/show_question', question: @question

@@ -1,19 +1,36 @@
-div id="answer_#{answer.id}"
-  p= "--------------------"
-  - if answer.mark
-    p Best answer
-  div id="answer_files_#{answer.id}"
-    - if answer.files.attached?
-      - answer.files.each do |file|
-        p= link_to file.filename.to_s, url_for(file)
-        - if current_user.present? && current_user ==  answer.user
-          =link_to 'delete file ', purge_attachment_path(file), data: { turbo_method: :delete }
-  -if current_user.present? && current_user == answer.user
-    = turbo_frame_tag id=dom_id(answer)
-      = link_to answer.body, edit_answer_path(answer)
-      p= link_to "Delete answer", answer_path(answer), data: { turbo_method: :delete }
-  - else
-    p = answer.body
-
-  - if current_user.present? && current_user ==  @question.user
-    = button_to 'Mark', mark_answer_path(answer)
+div id="answer_#{answer.id}" class="container mt-4 p-3 border rounded"
+  = turbo_frame_tag id=dom_id(answer) do
+    .row
+      .col-12
+        .row
+          .col-9
+            - if current_user&.user_of? answer
+              p
+                = link_to answer.body, edit_answer_path(answer), class: "text-decoration-none"
+            - else
+              p = answer.body
+          .col-3.d-flex.justify-content-end.align-items-start
+            - if answer.mark
+              span.badge.bg-success.text-white Best answer
+        .row
+          .col-1
+            - if answer.links.count > 0
+              = "Links:"
+          .col-5
+            - if answer.links.count > 0
+              ul
+                = render answer.links
+          .col-1
+            - if answer.files.attached?
+              = "Files:"
+          .col-5
+            - if answer.files.attached?
+              ul
+                - answer.files.each do |file|
+                  li.list-group-item = link_to file.filename.to_s, url_for(file), class: "text-decoration-none"
+  .row
+    .col-12.d-flex.justify-content-end
+      - if current_user&.user_of? answer
+        = button_to 'Delete', answer_path(answer), method: :delete, class: "btn btn-danger me-2"
+      - if current_user&.user_of? answer.question
+        = button_to 'Mark', mark_answer_path(answer), class: "btn btn-primary"

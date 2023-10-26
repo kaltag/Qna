@@ -1,0 +1,3 @@
+div id="new_answer" class="container"
+  = render 'shared/errors', resource: answer
+  = render 'answers/form', model: [answer.question, answer], answer: answer

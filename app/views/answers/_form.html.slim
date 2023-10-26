@@ -1,7 +1,19 @@
-= render 'shared/errors', resource: @answer
-= form_for [@question, @answer] do |f|
-  = f.label :body
-  = f.text_area :body
-  = f.label :files
-  = f.file_field :files, multiple: true, direct_upload: true
-  = f.submit 'Create'
+div class="container mt-4 p-4 border rounded bg-light"
+  = form_with model: model, class: 'mb-3' do |f|
+    .form-group
+      = f.label :body, class: 'form-label'
+      = f.text_area :body, class: 'form-control'
+    .form-group.mb-3
+      = f.label :files, class: 'form-label'
+      = f.file_field :files, multiple: true, class: 'form-control'
+    - if answer.files.attached?
+      .form-group
+        p
+          = f.collection_check_boxes :files, answer.files, :signed_id, :filename.to_s do |b|
+            .form-check
+              = b.check_box(checked: true, class: 'form-check-input')
+              = b.label class: 'form-check-label'
+    div.border.p-3.mb-3
+      = render 'links/new', f: f, linkable: answer
+    .form-group
+      = f.submit 'Answer', class: "btn btn-primary mt-3"

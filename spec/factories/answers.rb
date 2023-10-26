@@ -2,15 +2,24 @@
 
 FactoryBot.define do
   factory :answer do
-    body { 'MyTextAns' }
-    question
+    question factory: %i[question]
 
-    trait :invalid do
-      body { nil }
+    sequence :body do |n|
+      "MyAnswerBody#{n}"
     end
 
-    trait :with_file do
-      files { [Rack::Test::UploadedFile.new('spec/rails_helper.rb', 'spec/spec_helper.rb')] }
+    transient do
+      with_attachment { false }
     end
+
+    after(:build) do |answer, evaluator|
+      if evaluator.with_attachment
+        answer.files.attach(io: File.open(Rails.root.join('spec/rails_helper.rb').to_s), filename: 'rails_helper.rb')
+      end
+    end
+  end
+
+  trait :answer_invalid do
+    body { nil }
   end
 end

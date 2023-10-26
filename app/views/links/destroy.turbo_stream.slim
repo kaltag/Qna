@@ -1,0 +1,5 @@
+= fields model: @linkable do |form|
+  = form.fields_for :links, child_index: params[:index] do |link_form|
+    = turbo_stream.replace "link-#{@linkable.class.to_s.downcase}-#{params[:index]}" do
+      = link_form.hidden_field :id, value: params[:id]
+      = link_form.hidden_field :_destroy, value: true

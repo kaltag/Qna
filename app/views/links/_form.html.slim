@@ -1,0 +1,16 @@
+= turbo_frame_tag id="link-#{type}-#{link.index}" do
+  .form-group.border.p-3.mb-3
+    .form-group.row
+      .col-sm-2
+        = link.label :name, 'Link name', class: 'col-form-label'
+      .col-sm-10
+        = link.text_field :name, class: 'form-control'
+    .form-group.row
+      .col-sm-2
+        = link.label :url, class: 'col-form-label'
+      .col-sm-10
+        = link.text_field :url, class: 'form-control'
+      .col-sm-12.d-flex.justify-content-end.align-items-start
+        = parent_form.submit 'X', formaction: link_path(link.index), formmethod: :delete, class: 'btn btn-danger btn-sm ml-auto', formnovalidate: true
+
+

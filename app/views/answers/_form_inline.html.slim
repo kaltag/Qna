@@ -1,8 +1,3 @@
 = turbo_frame_tag id="inline_#{dom_id(answer)}"
   = render 'shared/errors', resource: answer
-  = form_with model: [answer] do |f|
-    = f.label :body
-    = f.text_area :body
-    = f.label :files
-    = f.file_field :files, multiple: true, direct_upload: true
-    = f.submit 'Save'
+  = render 'answers/form', answer: answer, model: [answer]

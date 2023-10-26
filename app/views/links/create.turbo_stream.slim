@@ -1,0 +1,7 @@
+= fields model: @linkable do |form|
+  = turbo_stream.replace "add-link-#{@linkable.class.to_s.downcase}" do
+    = form.submit 'Add link', formaction: link_path(params[:index].to_i + 1), formmethod: :post, id: "add-link", formnovalidate: true, class: "btn btn-primary mt-3"
+
+  = turbo_stream.append "links-section-#{@linkable.class.to_s.downcase}" do
+    = form.fields_for :links, child_index: params[:index] do |link_form|
+      = render 'links/form', link: link_form, parent_form: form, type: @linkable.class.to_s.downcase

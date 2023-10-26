@@ -2,121 +2,135 @@
 
 require 'rails_helper'
 
-RSpec.describe AnswersController do
+RSpec.describe AnswersController, type: :request do
   let(:user) { create(:user) }
   let(:question) { create(:question, user: user) }
-  let(:answer) { create(:answer, question: question, user: user) }
-  let(:second_answer) { create(:answer, question: question, user: user) }
 
-  describe 'POST #create' do
-    before { login(user) }
+  describe 'GET #new' do
+    before { get question_path(question) }
+
+    it 'assign question to @question' do
+      expect(assigns(:question)).to eq question
+    end
+
+    it 'assigns a new Answer to @new_answer' do
+      expect(assigns(:new_answer)).to be_a_new(Answer).with(question_id: question.id)
+    end
+
+    it 'assigns a new Link to first answer`s links' do
+      expect(assigns(:new_answer).links.first).to be_a_new(Link)
+    end
+
+    it 'renders answers/_new view' do
+      expect(response).to render_template 'answers/_new'
+    end
+
+    it 'renders links/_new view' do
+      expect(response).to render_template 'links/_new'
+    end
+  end
+
+  describe 'POST #create', :js do
+    before { sign_in(user) }
 
     context 'with valid attributes' do
-      it 'saves a new answer in the database' do
+      it 'saves a new question`s answer in the database' do
         expect do
-          post :create, params: { answer: attributes_for(:answer), question_id: question, user_id: user }
-        end.to change(Answer, :count).by(1)
-      end
-    end
-
-    it 're-renders question show view' do
-      post :create, params: { answer: attributes_for(:answer), question_id: question, user_id: user }
-      expect(response).to redirect_to question_path(question)
-    end
-
-    context 'with invalid attributes' do
-      it 'does not save the answer' do
-        expect do
-          post :create, params: { answer: attributes_for(:answer, :invalid), question_id: question, user_id: user }
-        end.not_to change(Answer, :count)
-      end
-    end
-  end
-
-  context 'when unauthenticated user' do
-    it "doesn't save a new answer in the database" do
-      expect do
-        post :create, params: { answer: attributes_for(:answer), question_id: question, user_id: user }
-      end.not_to change(Answer, :count)
-    end
-
-    it 'redirects to sign in page' do
-      post :create, params: { answer: attributes_for(:answer), question_id: question, user_id: user }
-      expect(response).to redirect_to new_user_session_path
-    end
-  end
-
-  describe 'DELETE #destroy' do
-    context 'when authenticated user' do
-      before { login(user) }
-
-      let!(:answer) { create(:answer, question: question, user: user) }
-
-      it 'deletes the answer' do
-        expect { delete :destroy, params: { id: answer, question_id: question, user_id: user } }.to change(Answer, :count).by(-1)
+          post question_answers_path(question,
+                                     params: { answer: attributes_for(:answer) })
+        end.to change(question.answers, :count).by(1)
+                                               .and change(
+                                                 user.answers, :count
+                                               ).by(1)
       end
 
-      it 're-renders question path' do
-        delete :destroy, params: { id: answer, question_id: question, user_id: user }
+      it 'saves a new answer`s links in the database' do
+        expect  do
+          post question_answers_path(question,
+                                     params: { answer: attributes_for(:answer,
+                                                                      links_attributes: { 0 => attributes_for(:link) }) })
+        end.to change(Link.all, :count).by(1)
+      end
+
+      it 'redirect to question show view' do
+        post question_answers_path(question, params: { answer: attributes_for(:answer) })
         expect(response).to redirect_to question_path(question)
       end
     end
 
-    context 'when unauthenticated user' do
-      let!(:answer) { create(:answer, question: question, user: user) }
-
-      it "can't delete the question" do
-        expect { delete :destroy, params: { id: answer, question_id: question, user_id: user } }.not_to change(Answer, :count)
+    context 'with invalid attributes' do
+      it 'does not save the question' do
+        expect do
+          post question_answers_path(question,
+                                     params: { answer: attributes_for(:answer, :answer_invalid) })
+        end.to change(question.answers, :count).by(0)
+                                               .and change(
+                                                 user.answers, :count
+                                               ).by(0)
       end
 
-      it 'redirects to sign in page' do
-        delete :destroy, params: { id: answer, question_id: question, user_id: user }
-        expect(response).to redirect_to new_user_session_path
+      it 're-render new view' do
+        post question_answers_path(question, params: { answer: attributes_for(:answer, :answer_invalid) })
+        expect(response).to render_template 'answers/_new'
       end
     end
   end
 
+  describe 'DELETE #destroy', :js do
+    before { sign_in(user) }
+
+    let!(:answer) { create(:answer, question: question, user: user) }
+
+    it 'delete answer from database' do
+      expect { delete answer_path(answer) }.to change(question.answers, :count).by(-1)
+                                                                               .and change(user.answers, :count).by(-1)
+    end
+  end
+
   describe 'PATCH #update' do
-    before { login(user) }
+    before { sign_in(user) }
+
+    let!(:answer) { create(:answer, question: question, user: user) }
 
     context 'with valid attributes' do
       it 'changes answer attributes' do
-        patch :update, params: { id: answer, answer: attributes_for(:answer) }, format: :turbo_stream
-        expect(assigns(:answer)).to eq answer
+        patch answer_path(answer, answer: { body: 'new body test' }), params: { format: :turbo_stream }
+        expect(answer.reload.body).to eq 'new body test'
       end
 
       it 'renders update view' do
-        patch :update, params: { id: answer, answer: attributes_for(:answer) }, format: :turbo_stream
-        expect(response).to redirect_to question
+        patch answer_path(answer, answer: { body: 'new body' }), params: { format: :turbo_stream }
+        expect(response).to render_template :update
       end
     end
 
     context 'with invalid attributes' do
       it 'does not change answer attributes' do
         expect do
-          patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }
+          patch answer_path(answer, answer: { body: '' }), params: { format: :turbo_stream }
         end.not_to change(answer, :body)
       end
 
       it 'renders update view' do
-        patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }
-
-        expect(response).to render_template :edit
+        patch answer_path(answer, answer: { body: 'new body' }), params: { format: :turbo_stream }
+        expect(response).to render_template :update
       end
     end
   end
 
   describe 'POST #mark' do
-    before { login(user) }
+    before { sign_in(user) }
 
-    context 'when mark answer as best' do
-      it 'changes mark to false' do
-        post :mark, params: { id: answer, answer: attributes_for(:answer) }, format: :turbo_stream
+    context 'mark answer as best' do
+      it 'changes mark to true' do
+        answer = create(:answer, question: question, user: user)
+        post mark_answer_path(answer), params: { format: :turbo_stream }
         expect(answer.reload.mark).to be true
-        expect(second_answer.reload.mark).to be false
+      end
 
-        post :mark, params: { id: second_answer, answer: attributes_for(:answer) }, format: :turbo_stream
-        expect(second_answer.reload.mark).to be true
+      it 'changes mark to false' do
+        answer = create(:answer, question: question, user: user, mark: true)
+        post mark_answer_path(answer), params: { format: :turbo_stream }
         expect(answer.reload.mark).to be false
       end
     end
