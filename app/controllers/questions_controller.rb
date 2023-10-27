@@ -5,7 +5,7 @@ class QuestionsController < ApplicationController
   before_action :load_question, only: %i[show edit update destroy]
 
   def index
-    @questions = Question.all
+    @questions = Question.left_joins(:votes).group(:id).order('sum(votes.voice)')
   end
 
   def show

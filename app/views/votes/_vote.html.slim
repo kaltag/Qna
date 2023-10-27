@@ -1,0 +1,13 @@
+.d-flex.flex-column.justify-content-center.align-items-center.border-0
+  = button_to '&uarr;'.html_safe,
+          send("#{votable.class.name.underscore}_votes_path", votable),
+          params: { vote: { voice: 1 } },
+          class: class_button(votable, current_user, 1),
+          disabled: disabled_button(votable, current_user)
+  .my-2
+    = votable.show_votes
+  = button_to '&darr;'.html_safe,
+          send("#{votable.class.name.underscore}_votes_path", votable),
+          params: { vote: { voice: -1 } },
+          class: class_button(votable, current_user, -1),
+          disabled: disabled_button(votable, current_user)
