@@ -2,6 +2,12 @@
 
 class Answer < ApplicationRecord
   include Votable
+  include Commentable
+
+  after_create_commit lambda {
+                        broadcast_append_to 'answers', partial: 'answers/answer_broadcast', locals: { answer: self },
+                                                       target: 'answers'
+                      }
 
   belongs_to :question
   belongs_to :user, class_name: 'User'

@@ -39,6 +39,27 @@ describe 'User can create answer', "
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'spec_helper.rb'
     end
+
+    scenario 'answer a question, multiple sessions', js: true do
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+
+      Capybara.using_session('user') do
+        sign_in(user)
+        visit question_path(question)
+
+        fill_in 'Body', with: 'Test answer'
+        click_on 'Answer'
+
+        expect(page).to have_content 'Your answer successfully created.'
+        expect(page).to have_content 'Test answer'
+      end
+
+      Capybara.using_session('guest') do
+        expect(page).to have_content 'Test answer'
+      end
+    end
   end
 
   it 'Unauthenticated user tries to answer the question', :js do

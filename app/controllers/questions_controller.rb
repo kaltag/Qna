@@ -9,8 +9,12 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @new_answer = @question.answers.new
-    @new_answer.links.new
+    if params[:layout] == 'simple'
+      render 'questions/_show_simple', locals: { question: @question }
+    else
+      @new_answer = @question.answers.new
+      @new_answer.links.new
+    end
   end
 
   def new

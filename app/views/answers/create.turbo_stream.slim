@@ -1,7 +1,3 @@
-- if @answer.valid?
-  = turbo_stream.append "answers" do
-    = render @answer
-
 = turbo_stream.update "flash" do
   = render 'shared/flash'
 

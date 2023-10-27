@@ -1,3 +1,4 @@
 div id='answers' class="container"
+  = turbo_stream_from "answers"
   - question.answers.order(mark: :desc, created_at: :asc).each do |answer|
     = render answer if answer.persisted?

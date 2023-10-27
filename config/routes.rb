@@ -6,8 +6,13 @@ Rails.application.routes.draw do
 
   resources :gists, only: %i[show]
   resources :rewards, only: %i[index]
+
   concern :votable do
     resources :votes
+  end
+
+  concern :commentable do
+    resources :comments
   end
 
   resources :links, only: [], param: :index do
@@ -17,8 +22,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :questions, concerns: :votable, only: %i[index show new create destroy update edit] do
-    resources :answers, concerns: :votable, only: %i[new create destroy update edit], shallow: true do
+  resources :questions, concerns: %i[votable commentable], only: %i[index show new create destroy update edit] do
+    resources :answers, concerns: %i[votable commentable], only: %i[new create destroy update edit show],
+                        shallow: true do
       member do
         post :mark
       end

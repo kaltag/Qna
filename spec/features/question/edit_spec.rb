@@ -89,8 +89,8 @@ describe 'User can edit his question', "
 
   it 'Authenticated user tries to edit not his answer', :js do
     sign_in(user)
-    create(:question, user: other_user)
-    visit question_path(question)
+    question_other = create(:question, user: other_user)
+    visit question_path(question_other)
 
     expect(page).not_to have_link 'Edit question'
   end
