@@ -1,7 +1,11 @@
-tr
-  td
-    div id="question_#{question.id}_votes"
-      = render 'votes/vote', votable: question
-  td
-    = link_to question.title, question_path(question), class: "text-decoration-none"
-  td = question.body
+.row.border-bottom.mb-3 class="py-3"
+  .col-2.d-flex.align-items-center id="question_#{question.id}_votes"
+    = render 'votes/vote', votable: question
+  .col-6
+    .row
+      .col
+        = link_to question.title, question_path(question), class: "h4 text-decoration-none"
+      .col-12
+        = question.body
+      .col-12.mt-4
+        = render 'comments/comments', commentable: question

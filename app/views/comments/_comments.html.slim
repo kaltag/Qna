@@ -1,0 +1,8 @@
+= turbo_stream_from "#{commentable.class.name.underscore}_#{commentable.id}_comments"
+div id="#{commentable.class.name.underscore}_#{commentable.id}_comments"
+  .card.border-0
+    .card-body.p-0
+      = render commentable.comments
+- if current_user
+  .card-footer.bg-white.border-0
+    = render 'comments/form', comment: commentable.comments.new

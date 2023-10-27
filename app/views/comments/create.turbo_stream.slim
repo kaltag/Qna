@@ -1,0 +1,2 @@
+= turbo_stream.replace "new_#{@commentable.class.name.underscore}_#{@commentable.id}_comment" do
+  = render 'comments/form', comment: @commentable.comments.new

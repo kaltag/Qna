@@ -1,0 +1,4 @@
+div id="new_#{comment.commentable.class.name.underscore}_#{comment.commentable.id}_comment" class="py-3"
+  = form_with model: [comment.commentable, comment], class: 'd-inline-flex w-100' do |f|
+    = f.text_field :body, class: 'form-control mr-2 flex-grow-1'
+    = f.submit 'Send', class: "btn btn-primary"
