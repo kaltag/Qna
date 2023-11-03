@@ -5,14 +5,14 @@ class AnswersController < ApplicationController
   before_action :load_question, only: %i[new create]
   before_action :load_answer, only: %i[destroy update edit mark show]
 
+  def show; end
+
   def new
     @answer = @question.answers.build
     3.times { @answer.links.build }
   end
 
   def edit; end
-
-  def show; end
 
   def create
     @answer = @question.answers.build(answer_params)

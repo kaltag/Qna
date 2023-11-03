@@ -6,18 +6,16 @@ class Vote < ApplicationRecord
   belongs_to :user
   belongs_to :votable, polymorphic: true
 
-  validates :user, presence: true
-  validates :votable, presence: true
   validates :voice, uniqueness: { scope: %i[user_id votable_type votable_id] }
 
   scope :votable_voices, ->(votable) { where(votable: votable) }
 
   def save_or_update
     if persisted?
-      if voice != extra_data[:voice].to_i
-        update(extra_data)
-      else
+      if voice == extra_data[:voice].to_i
         destroy
+      else
+        update(extra_data)
       end
     else
       save

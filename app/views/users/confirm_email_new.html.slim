@@ -1,0 +1,7 @@
+div class="container mt-4 p-4 border rounded bg-light"
+  = render 'shared/errors', resource: @user
+  = form_with url: confirm_email_user_path(@user), method: :post, data: { turbo: false } do |f|
+    = f.label :email, "Email Address:"
+    = f.email_field :email
+
+    = f.submit "Send"

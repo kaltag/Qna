@@ -30,7 +30,7 @@ gem 'stimulus-rails'
 gem 'jbuilder'
 
 # Use Redis adapter to run Action Cable in production
-gem "redis", "~> 4.0"
+gem 'redis', '~> 4.0'
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -67,6 +67,7 @@ end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
+  gem 'letter_opener'
   gem 'web-console'
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
@@ -79,6 +80,7 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
+  gem 'capybara-email'
   gem 'launchy'
   gem 'rails-controller-testing'
   gem 'selenium-webdriver'
@@ -90,3 +92,7 @@ gem 'dotenv-rails', groups: %i[development test]
 gem 'faraday-retry'
 gem 'image_processing', '~> 1.2'
 gem 'octokit'
+gem 'omniauth'
+gem 'omniauth-github'
+gem 'omniauth-rails_csrf_protection'
+gem 'omniauth-vkontakte'

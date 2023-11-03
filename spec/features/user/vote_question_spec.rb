@@ -19,22 +19,22 @@ describe 'User can vote for a question', "
 
     it 'User vote for', :js do
       visit questions_path
-     within("#question_#{question.id}_votes") do
+      within("#question_#{question.id}_votes") do
         click_on '↑'
       end
 
-     within("#question_#{question.id}_votes") do
+      within("#question_#{question.id}_votes") do
         expect(page).to have_content '1'
       end
     end
 
     it 'User vote against', :js do
       visit questions_path
-     within("#question_#{question.id}_votes") do
+      within("#question_#{question.id}_votes") do
         click_on '↓'
       end
 
-     within("#question_#{question.id}_votes") do
+      within("#question_#{question.id}_votes") do
         expect(page).to have_content '-1'
       end
     end
@@ -42,14 +42,14 @@ describe 'User can vote for a question', "
     it 'User cancel voices for and against', :js do
       visit questions_path
 
-     within("#question_#{question.id}_votes") do
+      within("#question_#{question.id}_votes") do
         click_on '↑'
         click_on '↑'
         click_on '↓'
         click_on '↓'
       end
 
-     within("#question_#{question.id}_votes") do
+      within("#question_#{question.id}_votes") do
         expect(page).to have_content '0'
       end
     end
@@ -64,7 +64,7 @@ describe 'User can vote for a question', "
     it 'user try to vote for/against', :js do
       visit questions_path
 
-     within("#question_#{question.id}_votes") do
+      within("#question_#{question.id}_votes") do
         expect(page).not_to have_button '↑'
         expect(page).not_to have_button '↓'
       end
@@ -75,7 +75,7 @@ describe 'User can vote for a question', "
     it 'User try to vote for/against', :js do
       visit questions_path
 
-     within("#question_#{question.id}_votes") do
+      within("#question_#{question.id}_votes") do
         expect(page).not_to have_button '↑'
         expect(page).not_to have_button '↓'
       end

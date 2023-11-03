@@ -40,7 +40,7 @@ describe 'User can create answer', "
       expect(page).to have_link 'spec_helper.rb'
     end
 
-    scenario 'answer a question, multiple sessions', js: true do
+    it 'answer a question, multiple sessions', :js do
       Capybara.using_session('guest') do
         visit question_path(question)
       end

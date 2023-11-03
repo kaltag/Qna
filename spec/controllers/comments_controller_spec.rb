@@ -1,4 +1,3 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
-RSpec.describe CommentsController, type: :controller do
-end
+require 'rails_helper'
