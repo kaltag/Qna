@@ -2,23 +2,23 @@
 
 require 'rails_helper'
 
-feature 'User can comment an answer', "
+describe 'User can comment an answer', "
   In order to express my opinion about
   As an authenticated user
   I'd like to be able to comment an answer
 " do
-  given!(:user) { create(:user) }
-  given!(:question) { create(:question, user: user) }
-  given!(:answer) { create(:answer, user: user, question: question) }
+  let!(:user) { create(:user) }
+  let!(:question) { create(:question, user: user) }
+  let!(:answer) { create(:answer, user: user, question: question) }
 
   describe 'Authenticated user' do
-    background do
+    before do
       sign_in(user)
 
       visit questions_path
     end
 
-    scenario 'comment an answer', js: true do
+    it 'comment an answer', :js do
       visit question_path(question)
       fill_in :comment_body, with: 'Comment'
       click_on 'Send'
@@ -28,7 +28,7 @@ feature 'User can comment an answer', "
       end
     end
 
-    scenario 'comment an answer, multiple sessions', js: true do
+    it 'comment an answer, multiple sessions', :js do
       Capybara.using_session('guest') do
         visit question_path(question)
       end
@@ -50,10 +50,10 @@ feature 'User can comment an answer', "
     end
   end
 
-  scenario 'Unauthenticated user tries to comment a answer' do
+  it 'Unauthenticated user tries to comment a answer' do
     visit question_path(question)
 
-    expect(page).not_to have_selector 'textfield'
+    expect(page).not_to have_css 'textfield'
     expect(page).not_to have_button 'Send'
   end
 end

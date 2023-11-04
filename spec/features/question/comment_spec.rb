@@ -2,22 +2,22 @@
 
 require 'rails_helper'
 
-feature 'User can comment a question', "
+describe 'User can comment a question', "
   In order to express my opinion about
   As an authenticated user
   I'd like to be able to comment a question
 " do
-  given!(:user) { create(:user) }
-  given!(:question) { create(:question, user: user) }
+  let!(:user) { create(:user) }
+  let!(:question) { create(:question, user: user) }
 
   describe 'Authenticated user' do
-    background do
+    before do
       sign_in(user)
 
       visit questions_path
     end
 
-    scenario 'comment a question', js: true do
+    it 'comment a question', :js do
       visit questions_path
       fill_in :comment_body, with: 'Comment'
       click_on 'Send'
@@ -27,7 +27,7 @@ feature 'User can comment a question', "
       end
     end
 
-    scenario 'comment a question, multiple sessions', js: true do
+    it 'comment a question, multiple sessions', :js do
       Capybara.using_session('guest') do
         visit questions_path
       end
@@ -49,10 +49,10 @@ feature 'User can comment a question', "
     end
   end
 
-  scenario 'Unauthenticated user tries to comment a question' do
+  it 'Unauthenticated user tries to comment a question' do
     visit questions_path
 
-    expect(page).not_to have_selector 'textfield'
+    expect(page).not_to have_css 'textfield'
     expect(page).not_to have_button 'Send'
   end
 end

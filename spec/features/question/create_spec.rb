@@ -56,7 +56,7 @@ describe 'User can create question', "
       expect(page).to have_content 'With reward for best question!'
     end
 
-    scenario 'asks a question, multiple sessions', js: true do
+    it 'asks a question, multiple sessions', :js do
       Capybara.using_session('guest') do
         visit questions_path
       end
