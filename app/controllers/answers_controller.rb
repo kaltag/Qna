@@ -4,6 +4,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy]
   before_action :load_question, only: %i[new create]
   before_action :load_answer, only: %i[destroy update edit mark show]
+  before_action :pundit_policy_authorized, only: %i[edit destroy update show mark]
 
   def show; end
 
@@ -16,6 +17,7 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.build(answer_params)
+    authorize @answer
 
     respond_to do |format|
       format.html do
@@ -45,8 +47,6 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    return unless current_user.user_of? @answer
-
     @question = @answer.question
     @answer.destroy
     respond_to do |format|
@@ -84,5 +84,11 @@ class AnswersController < ApplicationController
   def answer_params
     params.require(:answer).permit(:body, files: [],
                                           links_attributes: %i[id name url _destroy]).merge(user: current_user)
+  end
+
+  protected
+
+  def pundit_policy_authorized
+    authorize @answer
   end
 end

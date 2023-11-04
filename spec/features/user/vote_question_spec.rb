@@ -19,6 +19,7 @@ describe 'User can vote for a question', "
 
     it 'User vote for', :js do
       visit questions_path
+
       within("#question_#{question.id}_votes") do
         click_on '↑'
       end

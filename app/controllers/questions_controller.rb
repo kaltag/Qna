@@ -3,6 +3,7 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :load_question, only: %i[show edit update destroy]
+  before_action :pundit_policy_authorized, only: %i[edit destroy update show mark]
 
   def index
     @questions = Question.left_joins(:votes).group(:id).order('sum(votes.voice)')
@@ -58,5 +59,11 @@ class QuestionsController < ApplicationController
   def remove_files
     remove_files = question_params[:remove_files]
     ActiveStorage::Attachment.find(remove_files).each(&:purge)
+  end
+
+  protected
+
+  def pundit_policy_authorized
+    authorize @question
   end
 end
