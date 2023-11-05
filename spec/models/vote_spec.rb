@@ -7,8 +7,8 @@ RSpec.describe Vote do
   let!(:user) { create(:user) }
   let!(:votable) { create(:question, user: user) }
 
-  it { is_expected.to validate_presence_of(:user) }
-  it { is_expected.to validate_presence_of(:votable) }
+  it { is_expected.to belong_to :user }
+  it { is_expected.to belong_to :votable }
 
   describe '#save_or_update' do
     context 'when the vote is not persisted' do

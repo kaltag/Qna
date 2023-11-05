@@ -21,8 +21,9 @@ div class="container mt-4 p-4 border rounded bg-light"
             li.list-group-item = link_to file.filename.to_s, url_for(file), class: "text-decoration-none"
   .row
     .col-12.d-flex.justify-content-end
-      - if current_user&.user_of? question
+      - if policy(question).edit?
         = link_to 'Edit question', edit_question_path(question), class: "btn btn-primary me-2"
+      - if policy(question).destroy?
         = button_to 'Delete question', question_path(question), method: :delete, class: "btn btn-danger", data: { turbo: false }
   .row
     .col-12
