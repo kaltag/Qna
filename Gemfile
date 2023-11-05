@@ -89,6 +89,8 @@ group :test do
   gem 'webdrivers', '~> 5.3.0'
 end
 
+gem 'active_model_serializers', '~> 0.10.13'
+gem 'doorkeeper', '~> 5.6'
 gem 'dotenv-rails', groups: %i[development test]
 gem 'faraday-retry'
 gem 'image_processing', '~> 1.2'
