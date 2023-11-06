@@ -1,0 +1,7 @@
+.row.border-bottom.mb-3 class="py-3"
+  .col-6
+    .row
+      .col
+        = link_to question.title, question_url(question), class: "h4 text-decoration-none"
+      .col-12
+        = question.body

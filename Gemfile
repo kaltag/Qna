@@ -100,3 +100,6 @@ gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-vkontakte'
 gem 'pundit', '~> 2.3'
+gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'whenever', require: false

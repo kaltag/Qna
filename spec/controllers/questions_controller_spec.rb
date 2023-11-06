@@ -55,6 +55,10 @@ RSpec.describe QuestionsController do
         expect { post :create, params: { question: attributes_for(:question) } }.to change(user.questions, :count).by(1)
       end
 
+      it 'creates new subscription' do
+        expect { post :create, params: { question: attributes_for(:question) } }.to change(user.subscriptions, :count).by(1)
+      end
+
       it 'saves a new question`s links in the database' do
         expect do
           post :create,

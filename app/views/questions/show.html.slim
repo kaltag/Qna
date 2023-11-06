@@ -1,3 +1,4 @@
+= render 'subscriptions/subscription', subscriptable: @question
 = turbo_frame_tag id=dom_id(@question)
   = render 'questions/show_question', question: @question
 

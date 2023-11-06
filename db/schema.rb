@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_05_101540) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_05_131836) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -145,6 +145,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_05_101540) do
     t.index ["question_id"], name: "index_rewards_on_question_id"
   end
 
+  create_table "subscriptions", force: :cascade do |t|
+    t.bigint "subscriber_id", null: false
+    t.string "subscriptable_type"
+    t.bigint "subscriptable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subscriber_id"], name: "index_subscriptions_on_subscriber_id"
+    t.index ["subscriptable_type", "subscriptable_id"], name: "index_subscriptions_on_subscriptable"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -183,5 +193,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_05_101540) do
   add_foreign_key "oauth_access_tokens", "users", column: "resource_owner_id"
   add_foreign_key "questions", "users"
   add_foreign_key "rewards", "questions"
+  add_foreign_key "subscriptions", "users", column: "subscriber_id"
   add_foreign_key "votes", "users"
 end

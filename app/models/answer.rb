@@ -9,6 +9,8 @@ class Answer < ApplicationRecord
                                                        target: 'answers'
                       }
 
+  after_create :send_updates
+
   belongs_to :question
   belongs_to :user, class_name: 'User'
   has_many :links, dependent: :destroy, as: :linkable
@@ -18,4 +20,10 @@ class Answer < ApplicationRecord
   has_many_attached :files
 
   validates :body, presence: true, length: { minimum: 10 }
+
+  private
+
+  def send_updates
+    SubscriptionJob.perform_later(self)
+  end
 end
