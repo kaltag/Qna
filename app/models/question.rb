@@ -1,8 +1,13 @@
 # frozen_string_literal: true
 
 class Question < ApplicationRecord
+  include Searchable
   include Votable
   include Commentable
+
+  def self.searchable_fields
+    %i[title body]
+  end
 
   after_create_commit lambda {
                         broadcast_append_to 'questions', partial: 'questions/question_broadcast', locals: { question: self },

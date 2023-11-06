@@ -12,4 +12,9 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+
+  def search
+    @searchables = ElasticsearchService.new(params[:searchables_model], params[:query]).search
+    render 'search/index'
+  end
 end

@@ -1,0 +1,23 @@
+.container.mt-4
+  = form_with url: search_path, method: :get, class: 'row' do |f|
+    .col-md-10
+      = f.text_field :query, class: 'form-control my-3'
+
+      .form-check.form-check-inline
+        = check_box_tag 'searchables_model[]', 'question', false, class: 'form-check-input'
+        = label_tag 'question', 'Questions', class: 'form-check-label'
+
+      .form-check.form-check-inline
+        = check_box_tag 'searchables_model[]', 'answer', false, class: 'form-check-input'
+        = label_tag 'answer', 'Answers', class: 'form-check-label'
+
+      .form-check.form-check-inline
+        = check_box_tag 'searchables_model[]', 'comment', false, class: 'form-check-input'
+        = label_tag 'comment', 'Comments', class: 'form-check-label'
+
+      .form-check.form-check-inline
+        = check_box_tag 'searchables_model[]', 'user', false, class: 'form-check-input'
+        = label_tag 'user', 'Users', class: 'form-check-label'
+
+    .col-md-2
+      = f.submit 'Search', class: "btn btn-primary mt-3"
