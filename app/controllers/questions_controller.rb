@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class QuestionsController < ApplicationController
+  include Subscriptable
+
   before_action :authenticate_user!, except: %i[index show]
   before_action :load_question, only: %i[show edit update destroy]
   before_action :pundit_policy_authorized, only: %i[edit destroy update show mark]
@@ -28,6 +30,7 @@ class QuestionsController < ApplicationController
   def create
     @question = current_user.questions.new(question_params)
     if @question.save
+      @question.subscribers << @question.user
       redirect_to @question, notice: 'Your question successfully created.'
     else
       render :new

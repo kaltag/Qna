@@ -1,0 +1,4 @@
+= link_to @question.title, question_url(@question), class: "h4 text-decoration-none"
+p= "New #{@object.class.to_s.downcase}:"
+
+= @object.body

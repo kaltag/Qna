@@ -22,6 +22,7 @@ module Qna
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.autoload_paths += [config.root.join('app')]
+    config.active_job.queue_adapter = :sidekiq
 
     config.generators do |g|
       g.test_framework :rspec,

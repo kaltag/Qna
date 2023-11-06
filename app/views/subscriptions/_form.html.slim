@@ -1,0 +1,4 @@
+= form_with model: subscription, class: 'mb-3' do |f|
+  = f.hidden_field :subscriptable_type, class: 'form-control', hide: true
+  = f.hidden_field :subscriptable_id, class: 'form-control'
+  = f.submit 'Subscribe', class: "btn btn-primary mt-3"

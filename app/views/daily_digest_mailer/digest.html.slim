@@ -1,0 +1,4 @@
+h1 New questions
+.container
+    - @questions.each do |question|
+      = render 'daily_digest_mailer/question', question: question

@@ -1,0 +1,5 @@
+div class='container' id='subscription'
+  - if @subscription
+    = render 'subscriptions/unsubscribe', subscription: @subscription
+  - else
+    = render 'subscriptions/form', subscription: Subscription.new(subscriptable: subscriptable)
