@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   end
 
   get '/confirm_email/:token', to: 'users#confirm_email', as: 'confirm_email_token'
+  get '/search', to: 'application#search'
 
   concern :votable do
     resources :votes

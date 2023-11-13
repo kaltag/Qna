@@ -137,6 +137,18 @@ GEM
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
       railties (>= 3.2)
+    elasticsearch (7.4.0)
+      elasticsearch-api (= 7.4.0)
+      elasticsearch-transport (= 7.4.0)
+    elasticsearch-api (7.4.0)
+      multi_json
+    elasticsearch-model (7.2.1)
+      activesupport (> 3)
+      elasticsearch (~> 7)
+      hashie
+    elasticsearch-transport (7.4.0)
+      faraday
+      multi_json
     erubi (1.12.0)
     execjs (2.9.1)
     factory_bot (6.2.1)
@@ -155,6 +167,9 @@ GEM
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashie (5.0.0)
+    httparty (0.21.0)
+      mini_mime (>= 1.0.0)
+      multi_xml (>= 0.5.2)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
@@ -189,11 +204,14 @@ GEM
       net-smtp
     marcel (1.0.2)
     matrix (0.4.2)
+    meilisearch (0.24.0)
+      httparty (>= 0.17.1, < 0.22.0)
     method_source (1.0.0)
     mini_magick (4.12.0)
     mini_mime (1.1.5)
     minitest (5.20.0)
     msgpack (1.7.2)
+    multi_json (1.15.0)
     multi_xml (0.6.0)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
@@ -447,6 +465,7 @@ DEPENDENCIES
   devise
   doorkeeper (~> 5.6)
   dotenv-rails
+  elasticsearch-model
   factory_bot_rails
   faraday-retry
   image_processing (~> 1.2)
@@ -454,6 +473,7 @@ DEPENDENCIES
   jbuilder
   launchy
   letter_opener
+  meilisearch (~> 0.24.0)
   octokit
   omniauth
   omniauth-github

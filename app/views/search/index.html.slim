@@ -1,0 +1,7 @@
+div class="container mt-4"
+  - @searchables.each do |model, values|
+    h3 = model.capitalize.pluralize
+    - if values.length > 0
+      = render partial: "search/#{model}", collection: values
+    - else
+      = render 'search/nothing'
