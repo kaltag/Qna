@@ -11,6 +11,8 @@ require "capistrano/passenger"
 require "capistrano/scm/git"
 require 'capistrano/sidekiq'
 
+require "whenever/capistrano"
+
 install_plugin Capistrano::Sidekiq
 install_plugin Capistrano::Sidekiq::Systemd
 install_plugin Capistrano::SCM::Git
