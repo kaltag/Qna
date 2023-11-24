@@ -498,7 +498,7 @@ DEPENDENCIES
   elasticsearch-model
   factory_bot_rails
   faraday-retry
-  image_processing (~> 1.2)
+  image_processing
   importmap-rails
   jbuilder
   launchy

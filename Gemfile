@@ -101,7 +101,7 @@ gem 'doorkeeper', '~> 5.6'
 gem 'dotenv-rails', groups: %i[development test]
 gem 'elasticsearch-model'
 gem 'faraday-retry'
-gem 'image_processing', '~> 1.2'
+gem 'image_processing'
 gem 'meilisearch', '~> 0.24.0'
 gem 'octokit'
 gem 'omniauth'
