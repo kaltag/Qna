@@ -112,3 +112,4 @@ gem 'pundit', '~> 2.3'
 gem 'sidekiq','~> 6.5.12'
 gem 'sinatra', require: false
 gem 'whenever', require: false
+gem "mini_racer"
