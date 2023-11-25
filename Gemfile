@@ -82,6 +82,7 @@ group :development do
   gem 'capistrano-bundler', require: false
   gem 'capistrano-passenger'
   gem 'capistrano-sidekiq'
+   gem 'capistrano3-unicorn', require: false
 end
 
 group :test do
@@ -113,3 +114,4 @@ gem 'sidekiq','~> 6.5.12'
 gem 'sinatra', require: false
 gem 'whenever', require: false
 gem "mini_racer"
+gem 'unicorn'

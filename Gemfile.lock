@@ -123,6 +123,8 @@ GEM
       capistrano (>= 3.9.0)
       capistrano-bundler
       sidekiq (>= 6.0)
+    capistrano3-unicorn (0.2.1)
+      capistrano (~> 3.1, >= 3.1.0)
     capybara (3.39.2)
       addressable
       matrix
@@ -210,6 +212,7 @@ GEM
     json (2.6.3)
     jsonapi-renderer (0.2.2)
     jwt (2.7.1)
+    kgio (2.11.4)
     language_server-protocol (3.17.0.3)
     launchy (2.5.2)
       addressable (~> 2.8)
@@ -337,6 +340,7 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
+    raindrops (0.20.1)
     rake (13.0.6)
     rdoc (6.5.0)
       psych (>= 4.0.0)
@@ -456,6 +460,9 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.5.0)
+    unicorn (6.1.0)
+      kgio (~> 2.6)
+      raindrops (~> 0.7)
     version_gem (1.1.3)
     warden (1.2.9)
       rack (>= 2.0.9)
@@ -492,6 +499,7 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rvm
   capistrano-sidekiq
+  capistrano3-unicorn
   capybara
   capybara-email
   debug
@@ -533,6 +541,7 @@ DEPENDENCIES
   stimulus-rails
   turbo-rails
   tzinfo-data
+  unicorn
   web-console
   webdrivers (~> 5.3.0)
   whenever
