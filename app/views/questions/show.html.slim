@@ -2,6 +2,7 @@
 = turbo_frame_tag id=dom_id(@question)
   = render 'questions/show_question', question: @question
 
-= render 'answers/answers', question: @question
+- cache ['answers', @question] do
+  = render 'answers/answers', question: @question
 
 = render 'answers/new', answer: @new_answer

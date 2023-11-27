@@ -1,31 +1,32 @@
-div class="container mt-4 p-4 border rounded bg-light"
-  .row
-    .col-12
-      h1.display-4= question.title
-      p.lead= question.body
-  .row
-    .col-1
-      - if question.links.count > 0
-        = "Links:"
-    .col-5
-      - if question.links.count > 0
-        ul
-          = render question.links
-    .col-1
-      - if question.files.attached?
-        = "Files:"
-    .col-5
-      - if question.files.attached?
-        ul
-          - question.files.each do |file|
-            li.list-group-item = link_to file.filename.to_s, url_for(file), class: "text-decoration-none"
-  .row
-    .col-12.d-flex.justify-content-end
-      - if policy(question).edit?
-        = link_to 'Edit question', edit_question_path(question), class: "btn btn-primary me-2"
-      - if policy(question).destroy?
-        = button_to 'Delete question', question_path(question), method: :delete, class: "btn btn-danger", data: { turbo: false }
-  .row
-    .col-12
-      - if !question.reward.nil?
-        i= '*With reward for best question!'
+- cache question do
+  div class="container mt-4 p-4 border rounded bg-light"
+    .row
+      .col-12
+        h1.display-4= question.title
+        p.lead= question.body
+    .row
+      .col-1
+        - if question.links.count > 0
+          = "Links:"
+      .col-5
+        - if question.links.count > 0
+          ul
+            = render question.links
+      .col-1
+        - if question.files.attached?
+          = "Files:"
+      .col-5
+        - if question.files.attached?
+          ul
+            - question.files.each do |file|
+              li.list-group-item = link_to file.filename.to_s, url_for(file), class: "text-decoration-none"
+    .row
+      .col-12.d-flex.justify-content-end
+        - if policy(question).edit?
+          = link_to 'Edit question', edit_question_path(question), class: "btn btn-primary me-2"
+        - if policy(question).destroy?
+          = button_to 'Delete question', question_path(question), method: :delete, class: "btn btn-danger", data: { turbo: false }
+    .row
+      .col-12
+        - if !question.reward.nil?
+          i= '*With reward for best question!'

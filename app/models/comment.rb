@@ -3,7 +3,7 @@
 class Comment < ApplicationRecord
   include Searchable
   belongs_to :user
-  belongs_to :commentable, polymorphic: true
+  belongs_to :commentable, polymorphic: true, touch: true
 
   validates :body, presence: true
 
