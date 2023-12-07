@@ -1,43 +1,44 @@
-div id="answer_#{answer.id}" class="container mt-4 p-3 border rounded"
-  .row
-    .col-1
-      div id="answer_#{answer.id}_votes"
-        = render 'votes/vote', votable: answer
-    .col-11
-      = turbo_frame_tag id=dom_id(answer) do
+- cache answer do
+  div id="answer_#{answer.id}" class="container mt-4 p-3 border rounded"
+    .row
+      .col-1
+        div id="answer_#{answer.id}_votes"
+          = render 'votes/vote', votable: answer
+      .col-11
+        = turbo_frame_tag id=dom_id(answer) do
+          .row
+            .col-12
+              .row
+                .col-9
+                  - if policy(answer).update?
+                    p
+                      = link_to answer.body, edit_answer_path(answer), class: "text-decoration-none"
+                  - else
+                    p = answer.body
+                .col-3.d-flex.justify-content-end.align-items-start
+                  - if answer.mark
+                    span.badge.bg-success.text-white Best answer
+              .row
+                .col-1
+                  - if answer.links.count > 0
+                    = "Links:"
+                .col-5
+                  - if answer.links.count > 0
+                    ul
+                      = render answer.links
+                .col-1
+                  - if answer.files.attached?
+                    = "Files:"
+                .col-5
+                  - if answer.files.attached?
+                    ul
+                      - answer.files.each do |file|
+                        li.list-group-item = link_to file.filename.to_s, url_for(file), class: "text-decoration-none"
         .row
-          .col-12
-            .row
-              .col-9
-                - if policy(answer).update?
-                  p
-                    = link_to answer.body, edit_answer_path(answer), class: "text-decoration-none"
-                - else
-                  p = answer.body
-              .col-3.d-flex.justify-content-end.align-items-start
-                - if answer.mark
-                  span.badge.bg-success.text-white Best answer
-            .row
-              .col-1
-                - if answer.links.count > 0
-                  = "Links:"
-              .col-5
-                - if answer.links.count > 0
-                  ul
-                    = render answer.links
-              .col-1
-                - if answer.files.attached?
-                  = "Files:"
-              .col-5
-                - if answer.files.attached?
-                  ul
-                    - answer.files.each do |file|
-                      li.list-group-item = link_to file.filename.to_s, url_for(file), class: "text-decoration-none"
-      .row
-        .col-12.d-flex.justify-content-end
-          - if policy(answer).destroy?
-            = button_to 'Delete', answer_path(answer), method: :delete, class: "btn btn-danger me-2"
-          - if policy(answer).mark?
-            = button_to 'Mark', mark_answer_path(answer), class: "btn btn-primary"
+          .col-12.d-flex.justify-content-end
+            - if policy(answer).destroy?
+              = button_to 'Delete', answer_path(answer), method: :delete, class: "btn btn-danger me-2"
+            - if policy(answer).mark?
+              = button_to 'Mark', mark_answer_path(answer), class: "btn btn-primary"
 
   = render 'comments/comments', commentable: answer
